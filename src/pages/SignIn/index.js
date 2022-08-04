@@ -11,32 +11,36 @@ export default function SignIn() {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+      <Animatable.View
+        animation="fadeInLeft"
+        delay={500}
+        style={styles.containerHeader}
+      >
         <Text style={styles.message}>Bem-vindo(a)</Text>
       </Animatable.View>
 
       <Animatable.View amimation="fadeInUp" style={styles.containerForm}>
         <Text style={styles.title}>Email</Text>
-        <TextInput
-          placeholder="Digite um email..."
-          style={styles.input}
-        />
+        <TextInput placeholder="Digite um email..." style={styles.input} />
 
         <Text style={styles.title}>Senha</Text>
         <TextInput
           placeholder="Sua senha"
           style={styles.input}
+          secureTextEntry={true}
         />
 
         <TouchableOpacity style={styles.buttonLogin}>
           <Text style={styles.buttonText}>Acessar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.buttonRegister}
-          onPress={() => navigation.navigate('Register')}
-          >
-          <Text style={styles.buttonTextRegister}>Não possui uma conta ? Cadastre-se</Text>
+          onPress={() => navigation.navigate("Register")}
+        >
+          <Text style={styles.buttonTextRegister}>
+            Não possui uma conta ? Cadastre-se
+          </Text>
         </TouchableOpacity>
       </Animatable.View>
     </View>
