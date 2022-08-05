@@ -12,6 +12,6 @@ npm install react-native-screens react-native-safe-area-context
 
 npm install react-native-animatable
 
+# Testar
 
-
-Teste
+npm start
