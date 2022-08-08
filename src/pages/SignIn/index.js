@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-
-
+import firebase from '../../Services/firebaseConnection';
 import * as Animatable from 'react-native-animatable'
-
 import {useNavigation} from '@react-navigation/native'
 
 
@@ -36,7 +34,7 @@ export default function SignIn() {
 
         <TouchableOpacity
           style={styles.buttonRegister}
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate('SignUp')}
         >
           <Text style={styles.buttonTextRegister}>
             Não possui uma conta ? Cadastre-se

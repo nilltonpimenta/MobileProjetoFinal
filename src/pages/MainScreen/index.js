@@ -11,7 +11,7 @@ import { View,
  import {useNavigation} from '@react-navigation/native'
 
 
-export default function Main() {
+export default function MainScreen() {
   const navigation = useNavigation();
  return (
    <View style={styles.container}>
