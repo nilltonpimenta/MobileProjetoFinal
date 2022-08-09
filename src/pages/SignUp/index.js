@@ -1,127 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native'
-import { useForm, Controller } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import firebase from '../../Services/firebaseConnection';
+import { useNavigation } from '@react-navigation/native';
+import firebase from '../../services/firebaseConnection';
+import * as Animatable from 'react-native-animatable'
+import { AntDesign } from '@expo/vector-icons';
 
-const schema = yup.object({
-  username: yup.string().required("Informe seu username"),
-  email: yup.string().email("Email inválido").required("Informe seu email"),
-  password: yup.string().min(6, "A senha deve ter pelo menos 6 dígitos").required("Informe sua senha")
-})
 
-export default function SignUp() {
-  const navigation = useNavigation();
-  const { control, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
+export default function Register() {
+  
+  const[username, setUsername] = useState('');
+  const[email, setEmail] = useState('');
+  const[password, setPassword] = useState('');
+
+  
+  async function SignUp(){
+    await firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+    // Signed in
+    var user = userCredential.user;
+    // ...
   })
-
-  function handleSignUp(data) { // Função para realizar o cadastro no App.
-    console.log(data);
-  }
-
-  function handleSignUp1(){
-   
-    if(type === 'login'){
-      // Aqui fazemos o login
-      const user = firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        changeStatus(user.user.uid)
-      })
-      .catch((err)=>{
-        console.log(err);
-        alert('Ops parece que deu algum erro.');
-        return;
-      })
-
-    }else{
-     // Aqui cadastramos o usuario 
-     const user = firebase.auth().createUserWithEmailAndPassword(email, password)
-     .then((user)=>{
-       changeStatus(user.user.uid)
-     })
-     .catch((err)=>{
-      console.log(err);
-      alert('Ops parece que algo está errado!');
-      return;
-     })
-
-
-    }
-
-  }
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ..
+  });
+}
 
   return (
+    
     <View style={styles.container}>
+      <Animatable.View
+        animation="fadeInUp"
+        delay={100}
+        style={styles.containerHeader1}
+        >
+        <Text style={styles.message1}>Olá, você é novo por aqui ?</Text>
+      </Animatable.View>
 
-      <Text style={styles.texttitle}>Tela de Cadastro</Text>
+      <Animatable.View
+        animation="fadeInUp"
+        delay={100}
+        style={styles.containerHeader2}
+        >
+        <Text style={styles.message2}>Crie sua conta</Text>
+      </Animatable.View>
 
-      <Controller
-        control={control}
-        name="username"
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={[
-              styles.input, {
-                borderWidth: errors.username && 1,
-                borderColor: errors.username && '#ff375b'
-              }]}
-            onChangeText={onChange}
-            onBlur={onBlur} // Chamado quando o TextInput é tocado.
-            value={value}
-            placeholder="Seu username"
-          />
-        )}
-      />
-      {errors.username && <Text style={styles.labelError}>{errors.username?.message}</Text>}
-
-      <Controller
-        control={control}
-        name="email"
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={[
-              styles.input, {
-                borderWidth: errors.email && 1,
-                borderColor: errors.email && '#ff375b'
-              }]}
-            onChangeText={onChange}
-            onBlur={onBlur} // Chamado quando o TextInput é tocado.
-            value={value}
-            placeholder="Digite seu email"
-          />
-        )}
-      />
-      {errors.email && <Text style={styles.labelError}>{errors.email?.message}</Text>}
-      <Controller
-        control={control}
-        name="password"
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={[
-              styles.input, {
-                borderWidth: errors.password && 1,
-                borderColor: errors.password && '#ff375b'
-              }]}
-            onChangeText={onChange}
-            onBlur={onBlur} // Chamado quando o TextInput é tocado.
-            value={value}
-            placeholder="Digite sua senha"
-          />
-        )}
-      />
-      {errors.password && <Text style={styles.labelError}>{errors.password?.message}</Text>}
-
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleSubmit(handleSignUp)}
+      <Animatable.View style={styles.containerForm}>
         
-      >
-        <Text style={styles.buttonText}>Cadastrar</Text>
-      </TouchableOpacity>
+        <TextInput style={styles.input}
+        placeholder="Digite seu username" 
+        onChangeText={value => setUsername(value)} 
+        value={username}
+        />
+
+        
+        <TextInput style={styles.input} 
+        placeholder="Digite um email" 
+        onChangeText={value => setEmail(value)} 
+        value={email}
+        />
+
+        <TextInput style={styles.input} 
+        placeholder="Digite sua senha" 
+        onChangeText={value => setPassword(value)} 
+        value={password}
+        secureTextEntry={true}
+        />
+
+          <TouchableOpacity 
+            style={styles.buttonCadastrar} 
+            onPress={()=> {SignUp()}}>
+            <Text style={styles.buttonText}>Cadastrar</Text>
+          </TouchableOpacity>
+
+        </Animatable.View>
+
+        
     </View>
   );
 }
@@ -131,15 +86,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#04B404'
   },
-  containerHeader: {
-    marginTop: '14%',
-    marginBottom: '8%',
-    paddingStart: '5%'
+  containerHeader1:{
+    marginTop: '18%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
-  message: {
+  containerHeader2:{
+    marginBottom: '20%',
+  },
+
+  message1:{
     fontSize: 28,
     fontWeight: 'bold',
+    color: '#FFF'
+  },
+
+  message2:{
+    fontSize: 25,
     color: '#FFF'
   },
 
@@ -149,47 +113,34 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingStart: '5%',
-    paddingEnd: '5%'
-  },
-
-  title: {
-    fontSize: 20,
-    marginTop: 50,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#FFF'
+    paddingEnd: '5%',
   },
 
   input: {
     borderBottomWidth: 1,
-    height: 40,
+    height: 70  ,
     marginBottom: 12,
     fontSize: 16
   },
 
-  button: {
+  buttonCadastrar: {
     backgroundColor: '#04B404',
     width: '100%',
     borderRadius: 4,
     paddingVertical: 8,
     marginTop: 14,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
-  buttonText: {
+  buttonText:{
     color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold'
   },
 
-  buttonRegister: {
-    marginTop: 14,
-    alignSelf: 'center',
-  },
-
   registerText: {
     color: '#a1a1a1',
-  }
+  },
 
 })

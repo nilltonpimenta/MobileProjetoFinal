@@ -1,22 +1,19 @@
 import firebase from 'firebase/app';
-import 'firebase/database'
-import 'firebase/auth'
+import 'firebase/auth';
+import 'firebase/database';
 
 let firebaseConfig = {
-    apiKey: "AIzaSyAwgry2CJg7tQFu9pMuf6mG93Awdv3QKLU",
-    authDomain: "bancofirebase-1faf2.firebaseapp.com",
-    databaseURL: "https://bancofirebase-1faf2-default-rtdb.firebaseio.com",
-    projectId: "bancofirebase-1faf2",
-    storageBucket: "bancofirebase-1faf2.appspot.com",
-    messagingSenderId: "116249783898",
-    appId: "1:116249783898:web:19f07b008b094bfc333263"
-  };
+  apiKey: "AIzaSyCx470ikTszHtAyZyn3Wbkk-pL9tfjLuwc",
+  authDomain: "emrota-f64ef.firebaseapp.com",
+  projectId: "emrota-f64ef",
+  storageBucket: "emrota-f64ef.appspot.com",
+  messagingSenderId: "1033665956226",
+  appId: "1:1033665956226:web:39f93deb5a4361e2b2679b"
+};
 
-  if(!firebase.apps.length){
 
-    //abrir minha conexao
-        firebase.initializeApp(firebaseConfig);
-      }
-    
-    export default firebase
-    
+if(!firebase.apps.length){
+  firebase.initializeApp(firebaseConfig)
+}
+
+export default firebase;

@@ -31,9 +31,9 @@ export default function Main() {
 
     <TouchableOpacity 
       style={styles.button}
-      onPress={() => navigation.navigate('SignIn')}
+      onPress={() => {navigation.navigate('SignIn')}}
       c>
-      <Text style={styles.buttonText}>Acessar</Text>
+      <Text style={styles.buttonText}>Entrar</Text>
     </TouchableOpacity>
     </Animatable.View>
     
@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
   },
 
   text:{
-    color: '#a1a1a1'
+    color: '#a1a1a1',
+    fontSize: 15
   },
 
   button:{

@@ -33,7 +33,7 @@ export default function MainScreen() {
       style={styles.button}
       onPress={() => navigation.navigate('SignIn')}
       c>
-      <Text style={styles.buttonText}>Acessar</Text>
+      <Text style={styles.buttonText}>Entrar</Text>
     </TouchableOpacity>
     </Animatable.View>
     
