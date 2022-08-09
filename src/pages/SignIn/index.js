@@ -8,7 +8,6 @@ import {useNavigation} from '@react-navigation/native'
 export default function Acess() {
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
-
   async function Login(){
     await firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
