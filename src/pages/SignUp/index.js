@@ -3,29 +3,28 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import { useNavigation } from '@react-navigation/native';
 import firebase from '../../services/firebaseConnection';
 import * as Animatable from 'react-native-animatable'
-import { AntDesign } from '@expo/vector-icons';
 
 
 export default function Register() {
+  const navigation = useNavigation();
   
   const[username, setUsername] = useState('');
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
 
   
-  async function SignUp(){
-    await firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-    // Signed in
-    var user = userCredential.user;
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    console.log("Cadastrado!");
+    let user = userCredential.user;
     // ...
   })
   .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
+    let errorCode = error.code;
+    let errorMessage = error.message;
     // ..
   });
-}
+  
 
   return (
     
@@ -70,7 +69,7 @@ export default function Register() {
 
           <TouchableOpacity 
             style={styles.buttonCadastrar} 
-            onPress={()=> {SignUp()}}>
+            onPress={()=>{Register()}}>
             <Text style={styles.buttonText}>Cadastrar</Text>
           </TouchableOpacity>
 
@@ -94,6 +93,7 @@ const styles = StyleSheet.create({
 
   containerHeader2:{
     marginBottom: '20%',
+    
   },
 
   message1:{
@@ -103,8 +103,10 @@ const styles = StyleSheet.create({
   },
 
   message2:{
-    fontSize: 25,
-    color: '#FFF'
+    fontSize: 23,
+    color: '#FFF',
+    paddingLeft: 5, 
+    textAlign: 'left'
   },
 
   containerForm: {

@@ -2,44 +2,24 @@ import React from 'react';
 import { View, 
   Text, 
   StyleSheet,
-  Image,
+  Image, TextInput,
   TouchableOpacity,
  } from 'react-native';
 
  import * as Animatable from 'react-native-animatable'
 
  import {useNavigation} from '@react-navigation/native'
+ 
+export default function Pagamento() {
 
-
-export default function Main() {
-  const navigation = useNavigation();
  return (
    <View style={styles.container}>
     
-    <View style={styles.containerLogo}>
-      <Animatable.Image
-      animation="flipInY"
-      source={require('../../assets/Logo.png')}
-      style={styles.Logo}
-      resizeMode="contain"
-      />
-    </View>
-
-    <Animatable.View delay={600}animation="fadeInUp" style={styles.containerForm}>
-      <Text style={styles.title}>Acesse sua conta e encontre sua viagem !</Text>
-      <Text style={styles.text}>Faça o login para começar</Text>
-
-    <TouchableOpacity 
-      style={styles.button}
-      onPress={() => {navigation.navigate('SignIn')}}
-      c>
-      <Text style={styles.buttonText}>Entrar</Text>
-    </TouchableOpacity>
-    </Animatable.View>
-    
+    <Text>Tela de Pagamento</Text>
 
    </View>
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -49,14 +29,14 @@ const styles = StyleSheet.create({
   },
   
   containerLogo:{
-    flex: 2,
+    flex: 1,
     backgroundColor: '#04B404',
     justifyContent: 'center',
     alignItems: 'center'
   },
 
   containerForm:{
-    flex: 1,
+    flex: 3,
     backgroundColor: '#FFF',
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
@@ -65,7 +45,7 @@ const styles = StyleSheet.create({
   },
 
   title:{
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     marginTop: 28,
     marginBottom: 12,
@@ -81,9 +61,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#04B404',
     borderRadius: 50,
     paddingVertical: 8,
-    width: '60%',
+    width: '80%',
     alignSelf: 'center',
-    bottom: '15%',
+    bottom: '20%',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -95,8 +75,16 @@ const styles = StyleSheet.create({
   },
 
   Logo:{
-    width: 200,
-    height: 200,
+    width: 150,
     margin: 0,
   },
+
+  input:{
+    fontSize: 15,
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: 'center',
+    borderBottomWidth: 1,
+    height: 45,
+  }
 })

@@ -1,25 +1,31 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import firebase from '../../services/firebaseConnection';
-import * as Animatable from 'react-native-animatable'
-import {useNavigation} from '@react-navigation/native'
+import * as Animatable from 'react-native-animatable';
+import {useNavigation} from '@react-navigation/native';
+
 
 
 export default function Acess() {
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
-  async function Login(){
-    await firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-    alert=("Logado com sucesso !")
-    var user = userCredential.user;
+
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+      console.log("Logado com sucesso!");
+    let user = userCredential.user;
   })
   .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
+    let errorCode = error.code;
+    let errorMessage = error.message;
   });
-  }
-  
+
+  firebase.auth().signOut().then(() => {
+    console.log("Desconcetado!");
+  }).catch((error) => {
+    alert("Falha de comunicação !")
+  });
+
 
   useEffect(() =>{
     firebase.auth().onAuthStateChanged((user) => {
@@ -33,7 +39,6 @@ export default function Acess() {
 
   },[])
 
-
   const navigation = useNavigation();
 
   return (
@@ -43,7 +48,7 @@ export default function Acess() {
         delay={500}
         style={styles.containerHeader}
       >
-        <Text style={styles.message}>Bem-vindo(a)</Text>
+        <Text style={styles.message1}>Bem-vindo(a)</Text>
       </Animatable.View>
 
       <Animatable.View amimation="fadeInUp" style={styles.containerForm}>
@@ -54,7 +59,7 @@ export default function Acess() {
         value={email}
         />
 
-        <Text style={styles.title}>Password</Text>
+        <Text style={styles.title}>Senha</Text>
         <TextInput style={styles.input} 
         placeholder="Digite sua senha." 
         onChangeText={value => setPassword(value)} 
@@ -64,13 +69,13 @@ export default function Acess() {
 
         <TouchableOpacity 
           style={styles.buttonLogin} 
-          onPress={()=>{Login()}}>
+          onPress={()=>{Ace()}}>
           <Text style={styles.buttonText}>Acessar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.buttonRegister}
-          onPress={() => navigation.navigate('SignUp')}>
+          onPress={() => navigation.navigate({screen: 'SignUp'})}>
           <Text style={styles.buttonTextRegister}>
           Não possui uma conta ? Cadastre-se
           </Text>
@@ -91,7 +96,7 @@ const styles = StyleSheet.create({
     paddingStart: '5%'
   },
 
-  message:{
+  message1:{
     fontSize: 30,
     fontWeight: 'bold',
     color: '#FFF'
